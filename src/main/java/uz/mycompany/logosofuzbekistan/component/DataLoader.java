@@ -18,8 +18,6 @@ import java.util.List;
 
 @Component
 public class DataLoader implements CommandLineRunner {
-    @Value("${spring.datasource.initialization-mode}")
-    String initialMode;
 
     @Autowired
     UserRepository userRepository;
