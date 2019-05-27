@@ -28,22 +28,20 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    List<User> user;
-    @PostConstruct
-    void init() {
-        roleRepository.save(new Role(0,"ROLE_ADMIN"));
-        roleRepository.save(new Role(0,"ROLE_MODER"));
-        roleRepository.save(new Role(0,"ROLE_USER"));
-        this.user = new ArrayList<>();
 
-
-    }
 
     @Override
     public void run(String... args) throws Exception {
+        roleRepository.save(new Role(0,"ROLE_ADMIN"));
+        roleRepository.save(new Role(0,"ROLE_MODER"));
+        roleRepository.save(new Role(0,"ROLE_USER"));
+             userRepository.save(
+                    new User(1,"superAdmin",
+                    "superadmin@gmail.com",
+                            "Adminstrator",
+                    passwordEncoder.encode("123456"),
 
-            userRepository.save(new User("superAdmin","superadmin@gmail.com", passwordEncoder.encode("1930"),
-                    "Adminstrator",roleRepository.findAll()));
+                    roleRepository.findAll(),true,true,true,true));
 
     }
 }
