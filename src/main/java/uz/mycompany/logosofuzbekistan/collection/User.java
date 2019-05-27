@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class User implements UserDetails {
     private String password;
 
      @DBRef
-    private List<Role> roles;
+    private List<Role> roles= new ArrayList<>();
 
 
     private boolean accountNonExpired = true;
