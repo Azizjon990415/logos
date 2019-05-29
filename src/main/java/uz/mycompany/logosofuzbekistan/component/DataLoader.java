@@ -33,10 +33,10 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         roleRepository.save(new Role(0,"ROLE_ADMIN"));
-        roleRepository.save(new Role(0,"ROLE_MODER"));
-        roleRepository.save(new Role(0,"ROLE_USER"));
+        roleRepository.save(new Role(1,"ROLE_MODER"));
+        roleRepository.save(new Role(2,"ROLE_USER"));
              userRepository.save(
-                    new User(1,"superAdmin",
+                    new User(3,"superAdmin1",
                     "superadmin@gmail.com",
                             "Adminstrator",
                     passwordEncoder.encode("123456"),

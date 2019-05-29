@@ -24,11 +24,15 @@ import uz.mycompany.logosofuzbekistan.security.JwtProvider;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.lang.reflect.Array;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/v2/api/auth")
 @Api(description = "Set of Registration.")
 public class AuthController {
     @Autowired
@@ -83,6 +87,17 @@ public class AuthController {
                 .orElseThrow(() -> new RuntimeException("User Role not set."));
 
         user.setRoles(Collections.singletonList(userRole));
+        List<User> baseUsers=userRepository.findAll();
+        if (baseUsers==null){
+            user.setId(0);
+
+        }
+        else {
+            IdComparator idComparator = new IdComparator();
+            Collections.sort(baseUsers, idComparator);
+        user.setId(baseUsers.get(baseUsers.size()-1).getId()+1);
+
+        }
 
         User result = userRepository.save(user);
 
@@ -91,5 +106,19 @@ public class AuthController {
                 .buildAndExpand(result.getUsername()).toUri();
 //         response.
         return ResponseEntity.ok().body("User registered successfully!");
+    }
+}
+class IdComparator implements Comparator<User> {
+
+    public int compare(User h1, User h2) {
+        if (h1.getId() == h2.getId()) {
+            return 0;
+        }
+        if (h1.getId() > h2.getId()) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
 }
