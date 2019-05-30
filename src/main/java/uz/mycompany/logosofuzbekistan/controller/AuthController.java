@@ -32,7 +32,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v2/api/auth")
+@RequestMapping("/api/auth")
 @Api(description = "Set of Registration.")
 public class AuthController {
     @Autowired

@@ -31,64 +31,65 @@ public class SpringFoxConfig {
 
     @Bean
     public Docket api() {
-//        final String swaggerToken =
-      Docket docket= new Docket(DocumentationType.SWAGGER_2);
-//                .globalOperationParameters(Collections.singletonList(
-//                        new ParameterBuilder()
-//                                .name("Authorization")
-//                                .modelRef(new ModelRef("string"))
-//                                .parameterType("header")
-//                                .required(true)
-//                                .hidden(true)
-//                                .defaultValue("Bearer " + swaggerToken)
-//                                .build()
-//                        )
-//                );
-    docket .select()
-                .apis(RequestHandlerSelectors.basePackage("uz.mycompany"))
-                .paths(PathSelectors.ant("/v2/**"))
-                .build()
+        final String swaggerToken ="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlckFkbWluMTIiLCJpYXQiOjE1NTkxNTMzMzgsImV4cCI6MTU1OTc1ODEzOH0.JolrQzwvXLz_wgIUhUUrx4p-UUQQrL2U79tBRn4k2i_WJIU81I4uBugzJ-cr_xZQCYxJ6Nlfd7J7bPCLz3CVMw";
+     Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .globalOperationParameters(Collections.singletonList(
+                        new ParameterBuilder()
+                                .name("Authorization")
+                                .modelRef(new ModelRef("string"))
+                                .parameterType("header")
+                                .required(true)
+                                .hidden(true)
+                                .defaultValue("Bearer " + swaggerToken)
+                                .build()
+                        )
+                );
+            return docket.select()
+                    .apis(RequestHandlerSelectors
+                            .basePackage("uz.mycompany.logosofuzbekistans.controller"))
+                    .paths(PathSelectors.regex("/.*"))
+                    .build().apiInfo(getApiInfo());
 
-                .enable(true)
-			.apiInfo(getApiInfo())
-			.securityContexts(Lists.newArrayList(securityContext()))
-			.securitySchemes(Lists.newArrayList(apiKey()));
+//                .enable(true)
+//			.apiInfo(getApiInfo())
+//			.securityContexts(Lists.newArrayList(securityContext()))
+//			.securitySchemes(Lists.newArrayList(apiKey()));
 
-    return docket;
+
 
     }
-    private ApiKey apiKey() {
-        return new ApiKey("AUTHORIZATION", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlckFkbWluMSIsImlhdCI6MTU1OTAyODU0OSwiZXhwIjoxNTU5NjMzMzQ5fQ.Z10PU71CW9kycsUfbTo4Pjh_FK8rodWAtR5-vauL6wX33sICIT7m-04oyKTCvNDCiZeGdZe5gBlU49xz-sT7eA", "header");
-    }
+//    private ApiKey apiKey() {
+//        return new ApiKey("AUTHORIZATION", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlckFkbWluMSIsImlhdCI6MTU1OTAyODU0OSwiZXhwIjoxNTU5NjMzMzQ5fQ.Z10PU71CW9kycsUfbTo4Pjh_FK8rodWAtR5-vauL6wX33sICIT7m-04oyKTCvNDCiZeGdZe5gBlU49xz-sT7eA", "header");
+//    }
 
-    @Bean
-    SecurityConfiguration security() {
-        return new SecurityConfiguration(
-                null,
-                null,
-                null, // realm Needed for authenticate button to work
-                null, // appName Needed for authenticate button to work
-                "BEARER ",// apiKeyValue
-                ApiKeyVehicle.HEADER,
-                "AUTHORIZATION", //apiKeyName
-                null);
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex("/anyPath.*"))
-                .build();
-    }
-
-    List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope
-                = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(
-                new SecurityReference("AUTHORIZATION", authorizationScopes));
-    }
+//    @Bean
+//    SecurityConfiguration security() {
+//        return new SecurityConfiguration(
+//                null,
+//                null,
+//                null, // realm Needed for authenticate button to work
+//                null, // appName Needed for authenticate button to work
+//                "BEARER ",// apiKeyValue
+//                ApiKeyVehicle.HEADER,
+//                "AUTHORIZATION", //apiKeyName
+//                null);
+//    }
+//
+//    private SecurityContext securityContext() {
+//        return SecurityContext.builder()
+//                .securityReferences(defaultAuth())
+//                .forPaths(PathSelectors.regex("/anyPath.*"))
+//                .build();
+//    }
+//
+//    List<SecurityReference> defaultAuth() {
+//        AuthorizationScope authorizationScope
+//                = new AuthorizationScope("global", "accessEverything");
+//        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+//        authorizationScopes[0] = authorizationScope;
+//        return Lists.newArrayList(
+//                new SecurityReference("AUTHORIZATION", authorizationScopes));
+//    }
 
     private ApiInfo getApiInfo() {
         return new ApiInfo(
