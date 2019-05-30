@@ -1,5 +1,6 @@
 # logos #Springboot #JWT #Mongo #SpringSecurity #Rest
 logos of Uzbekistan
+project crated in intellejIdea Maven
 this application crated with rest thats why there is no interface for test application i advise to use postman
 at first you must crate db Mongo;
 than authentificate :
